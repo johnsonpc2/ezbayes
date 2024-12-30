@@ -58,11 +58,6 @@ model <- brm(
 
 #### Inspect MCMC diagnostics to ensure convergence and mixing ####
 
-summary(model)   # Provide R-hat and ESS values for the higher-level parameters in the model
-
-plot(model)      # Shows histograms and traceplots for the samples of the higher-level parameters in the model
-
-pairs(model)     # Shows histograms and scatterplots that allow us to see whether there is any covariance between the higher-level parameters in the model
 
 #### Examine the samples from the posterior distribution ####
 
