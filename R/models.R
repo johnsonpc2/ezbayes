@@ -14,8 +14,8 @@ mtcars %>% mutate(am = factor(am)) %>% select(mpg, am) -> mtcars
 # There should also be a column called "s" that identifies the source of each
 # trial (which may be, e.g., the ID of the participant that produced that trial).
 
-dichot_model <- function(data, f, family, prior, chains, iter, cores){
-
+dichot_model <- function(data, f, family, prior, chains,
+                         iter, cores, plots, graphs = TRUE) {
   model <- brm(
     formula = f,
     data = data,
@@ -30,36 +30,40 @@ dichot_model <- function(data, f, family, prior, chains, iter, cores){
   )
 
   #### Inspect MCMC diagnostics to ensure convergence and mixing ####
-  print(model)
-
-  plot(model)
-
-  pairs(model)
-
+  if (graphs) {
+    print(model)
+    plot(model)
+    pairs(model)
+  }
 
   #### Examine the samples from the posterior distribution ####
-
-  var_names <- variables(model)    # The "variables" function returns a vector of the name of every parameter in the model, which can be useful as BRMS does not always assign things the best names!
+  var_names <- variables(model) # The "variables" function returns a vector of the name of every parameter in the model, which can be useful as BRMS does not always assign things the best names!
 
   # Numerical summaries of the parameters for each subject
-  model %>%
+  numerical_summary <- model %>%
     gather_draws(`b_am(.*)`, regex = TRUE) %>%
     group_by(.variable) %>%
     mode_hdi(.value)
 
-  # Visual summaries of the parameters for each subject
-  model %>%
-    gather_draws(`b_am(.*)`, regex = TRUE) %>%
-    ggplot(aes(x = .value, y = .variable)) +
-    stat_halfeye(point_interval = "mode_hdi")
+  if (graphs) {
+    # Visual summaries of the parameters for each subject
+    param_summary_plot <- model %>%
+      gather_draws(`b_am(.*)`, regex = TRUE) %>%
+      ggplot(aes(x = .value, y = .variable)) +
+      stat_halfeye(point_interval = "mode_hdi")
+    print(param_summary_plot)
 
-  # Visual comparison of the parameters for each subject
-  model %>%
-    gather_draws(`b_am(.*)`, regex = TRUE) %>%
-    compare_levels(.value, by = .variable) %>%
-    ggplot(aes(x = .value, y = .variable)) +
-    stat_halfeye(point_interval = "mode_hdi") +
-    geom_vline(xintercept = 0, linetype = "dashed")
+    # Visual comparison of the parameters for each subject
+    param_comparison_plot <- model %>%
+      gather_draws(`b_am(.*)`, regex = TRUE) %>%
+      compare_levels(.value, by = .variable) %>%
+      ggplot(aes(x = .value, y = .variable)) +
+      stat_halfeye(point_interval = "mode_hdi") +
+      geom_vline(xintercept = 0, linetype = "dashed")
+    print(param_comparison_plot)
+  }
+
+  return(model)
 }
 
 dichot_model(data = mtcars,
@@ -68,7 +72,8 @@ dichot_model(data = mtcars,
              prior = prior(beta(4, 1), class = b, lb = 0, ub = 1),
              chains = 5,
              iter = 2000,
-             cores = 5
+             cores = 5,
+             graphs = FALSE
              )
 
 # have the function report the BF and the ROPE
