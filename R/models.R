@@ -1,21 +1,29 @@
-# Example for using BRMS to do inference with dichotomous data from multiple sources
 
-#### Load necessary packages ####
-library(tidyverse)
-library(brms)
-library(tidybayes)
+#' Title
+#'
+#' @param data an object containing 2 variables, a dichotomous explanatory variable, and an independent variable
+#' @param f the formula of the
+#' @param family the family
+#' @param prior
+#' @param chains the number of
+#' @param iter
+#' @param cores the number of cores used to process the brms model construction
+#' @param graphs logical. Should diagnostic plots be printed?
+#'
+#' @returns
+#' @export
+#'
+#' @examples
 
-#### Read in the raw data ####
-data("mtcars")
-mtcars %>% mutate(am = factor(am)) %>% select(mpg, am) -> mtcars
+
+dichot_model <- function(data, f, family, prior, chains,
+                         iter, cores, graphs = TRUE) {
 
 # N.B.: We are assuming that the data contain a column called "y" which consists
 # only of 0's and 1's representing different binary outcomes for each observation.
 # There should also be a column called "s" that identifies the source of each
 # trial (which may be, e.g., the ID of the participant that produced that trial).
 
-dichot_model <- function(data, f, family, prior, chains,
-                         iter, cores, plots, graphs = TRUE) {
   model <- brm(
     formula = f,
     data = data,
@@ -66,16 +74,4 @@ dichot_model <- function(data, f, family, prior, chains,
   return(model)
 }
 
-dichot_model(data = mtcars,
-             f = mpg ~ 0 + am,
-             family = NULL,
-             prior = prior(beta(4, 1), class = b, lb = 0, ub = 1),
-             chains = 5,
-             iter = 2000,
-             cores = 5,
-             graphs = FALSE
-             )
-
 # have the function report the BF and the ROPE
-# have an option to have plots generated, or not, based on if its true or false
-
