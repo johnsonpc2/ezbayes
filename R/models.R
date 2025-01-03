@@ -17,6 +17,7 @@
 #' @importFrom tidybayes gather_draws mode_hdi stat_halfeye compare_levels
 #' @importFrom dplyr group_by
 #' @importFrom ggplot2 ggplot geom_vline
+#' @importFrom package function
 #'
 #' @examples
 
@@ -79,4 +80,7 @@ dichot_model <- function(data, formula, family, prior, chains,
   return(model)
 }
 
-# have the function report the BF and the ROPE
+# Incorporate ROPE from bayestestR
+# Zero-inflated models (poisson, negative exponential)
+# Hurdle models
+# A function that will do a shrinkage comparison between an independent and hierarchical model
