@@ -2,21 +2,26 @@
 #' Title
 #'
 #' @param data an object containing 2 variables, a dichotomous explanatory variable, and an independent variable
-#' @param f the formula of the
+#' @param formula the formula of the
 #' @param family the family
-#' @param prior
-#' @param chains the number of
-#' @param iter
+#' @param prior specify the priors to be used for the variables in the model
+#' @param chains the number of chains the model should be
+#' @param iter description of parameter
 #' @param cores the number of cores used to process the brms model construction
 #' @param graphs logical. Should diagnostic plots be printed?
 #'
-#' @returns
+#' @returns descriptive statistics and plots of the bayesia model specified in
+#' the function call
 #' @export
+#' @importFrom brms brm variables
+#' @importFrom tidybayes gather_draws mode_hdi stat_halfeye compare_levels
+#' @importFrom dplyr group_by
+#' @importFrom ggplot2 ggplot geom_vline
 #'
 #' @examples
 
 
-dichot_model <- function(data, f, family, prior, chains,
+dichot_model <- function(data, formula, family, prior, chains,
                          iter, cores, graphs = TRUE) {
 
 # N.B.: We are assuming that the data contain a column called "y" which consists
@@ -25,7 +30,7 @@ dichot_model <- function(data, f, family, prior, chains,
 # trial (which may be, e.g., the ID of the participant that produced that trial).
 
   model <- brm(
-    formula = f,
+    formula = formula,
     data = data,
     family = family,
     prior = prior,

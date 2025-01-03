@@ -4,10 +4,28 @@
 \alias{dichot_model}
 \title{Title}
 \usage{
-dichot_model(data, f, family, prior, chains, iter, cores, plots, graphs = TRUE)
+dichot_model(data, formula, family, prior, chains, iter, cores, graphs = TRUE)
 }
 \arguments{
-\item{graphs}{}
+\item{data}{an object containing 2 variables, a dichotomous explanatory variable, and an independent variable}
+
+\item{formula}{the formula of the}
+
+\item{family}{the family}
+
+\item{prior}{specify the priors to be used for the variables in the model}
+
+\item{chains}{the number of chains the model should be}
+
+\item{iter}{description of parameter}
+
+\item{cores}{the number of cores used to process the brms model construction}
+
+\item{graphs}{logical. Should diagnostic plots be printed?}
+}
+\value{
+descriptive statistics and plots of the bayesia model specified in
+the function call
 }
 \description{
 Title
