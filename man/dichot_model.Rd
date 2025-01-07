@@ -24,7 +24,7 @@ dichot_model(data, formula, family, prior, chains, iter, cores, graphs = TRUE)
 \item{graphs}{logical. Should diagnostic plots be printed?}
 }
 \value{
-descriptive statistics and plots of the bayesia model specified in
+descriptive statistics and plots of the Bayesian model specified in
 the function call
 }
 \description{

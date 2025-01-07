@@ -10,7 +10,7 @@
 #' @param cores the number of cores used to process the brms model construction
 #' @param graphs logical. Should diagnostic plots be printed?
 #'
-#' @returns descriptive statistics and plots of the bayesia model specified in
+#' @returns descriptive statistics and plots of the Bayesian model specified in
 #' the function call
 #' @export
 #' @importFrom brms brm variables
