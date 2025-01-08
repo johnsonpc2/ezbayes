@@ -2,12 +2,12 @@
 #' Title
 #'
 #' @param data an object containing 2 variables, a dichotomous explanatory variable, and an independent variable
-#' @param formula the formula of the
-#' @param family the family
-#' @param prior specify the priors to be used for the variables in the model
-#' @param chains the number of chains the model should be
-#' @param iter description of parameter
-#' @param cores the number of cores used to process the brms model construction
+#' @param formula specifies the structure of the model by defining the relationship between a response variable and predictor variables. This function is customizable with various options and parameters which may be fine-tuned to satisfy different types of models.
+#' @param family specifies the distribution family and link function for the response variable to determine the type of model being fit.
+#' @param prior allows for the specification of prior distributions for model parameters. Priors represent existing beliefs about parameter values before seeing the data. Note that models can be successfully run without the specification of this argument e.g., prior = NULL?
+#' @param chains specifies the number of Markov chains the model should run in parallel. Each chain represents an independent sampling sequence that starts at different initial values to explore the posterior distribution.
+#' @param iter Specifies the number of iterations per chain during the MCMC sampling process. By default, half of the iterations are used for warm-up, i.e., burn-in. For example, iter=2000 yields 1000 warmup iterations which are discarded as well as 1000 iterations used for inferential purposes.
+#' @param cores the number of CPU cores to use for parallel processing when fitting the model. This constrains the number of chains which can be run simultaneously.
 #' @param graphs logical. Should diagnostic plots be printed?
 #'
 #' @returns descriptive statistics and plots of the Bayesian model specified in
