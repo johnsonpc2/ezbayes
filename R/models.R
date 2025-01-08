@@ -8,7 +8,7 @@
 #' @param chains specifies the number of Markov chains the model should run in parallel. Each chain represents an independent sampling sequence that starts at different initial values to explore the posterior distribution.
 #' @param iter Specifies the number of iterations per chain during the MCMC sampling process. By default, half of the iterations are used for warm-up, i.e., burn-in. For example, iter=2000 yields 1000 warmup iterations which are discarded as well as 1000 iterations used for inferential purposes.
 #' @param cores the number of CPU cores to use for parallel processing when fitting the model. This constrains the number of chains which can be run simultaneously.
-#' @param graphs logical. Should diagnostic plots be printed?
+#' @param graphs logical. If TRUE, generates three types of diagnostic visualizations: 1) MCMC diagnostic plots including trace plots and autocorrelation for assessing chain convergence and mixing, 2) posterior distribution plots with uncertainty intervals for parameter inference, and 3) pairs plots showing correlations between model parameters. Default is TRUE.
 #'
 #' @returns descriptive statistics and plots of the Bayesian model specified in
 #' the function call
