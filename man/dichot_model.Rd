@@ -7,21 +7,21 @@
 dichot_model(data, formula, family, prior, chains, iter, cores, graphs = TRUE)
 }
 \arguments{
-\item{data}{an object containing 2 variables, a dichotomous explanatory variable, and an independent variable}
+\item{data}{an object containing 2 variables, a dichotomous explanatory variable, and an independent variable. The data must include a column 'y' with binary outcomes (0/1) and a column 's' for grouping/hierarchical structure identifiers.}
 
-\item{formula}{the formula of the}
+\item{formula}{specifies the structure of the model by defining the relationship between a response variable and predictor variables. This function is customizable with various options and parameters which may be fine-tuned to satisfy different types of models.}
 
-\item{family}{the family}
+\item{family}{specifies the distribution family and link function for the response variable to determine the type of model being fit, e.g., 'bernoulli' for binary outcomes, 'gaussian' for continuous.}
 
-\item{prior}{specify the priors to be used for the variables in the model}
+\item{prior}{allows for the specification of prior distributions for model parameters. Priors represent existing beliefs about parameter values before seeing the data. Can be informative,weakly informative, or non-informative priors. Use NULL for default weakly informative priors.}
 
-\item{chains}{the number of chains the model should be}
+\item{chains}{specifies the number of Markov chains the model should run in parallel. Each chain represents an independent sampling sequence that starts at different initial values to explore the posterior distribution.}
 
-\item{iter}{description of parameter}
+\item{iter}{Specifies the number of iterations per chain during the MCMC sampling process. By default, half of the iterations are used for warm-up, i.e., burn-in. For example, iter=2000 yields 1000 warmup iterations which are discarded as well as 1000 iterations used for inferential purposes.}
 
-\item{cores}{the number of cores used to process the brms model construction}
+\item{cores}{the number of CPU cores to use for parallel processing when fitting the model. This constrains the number of chains which can be run simultaneously.}
 
-\item{graphs}{logical. Should diagnostic plots be printed?}
+\item{graphs}{logical. If TRUE, generates three types of diagnostic visualizations: 1) MCMC diagnostic plots including trace plots and autocorrelation for assessing chain convergence and mixing, 2) posterior distribution plots with uncertainty intervals for parameter inference, and 3) pairs plots showing correlations between model parameters. Default is TRUE.}
 }
 \value{
 descriptive statistics and plots of the Bayesian model specified in
@@ -29,4 +29,15 @@ the function call
 }
 \description{
 Title
+}
+\examples{
+dichot_model(data = data(mtcars),
+            f = mpg ~ 0 + am,
+            family = NULL,
+            prior = prior(beta(4, 1), class = b, lb = 0, ub = 1),
+            chains = 5,
+            iter = 2000,
+            cores = 5,
+            graphs = FALSE
+)
 }

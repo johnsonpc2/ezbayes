@@ -17,10 +17,17 @@
 #' @importFrom tidybayes gather_draws mode_hdi stat_halfeye compare_levels
 #' @importFrom dplyr group_by
 #' @importFrom ggplot2 ggplot geom_vline
-#' @importFrom package function
 #'
 #' @examples
-
+#'dichot_model(data = data(mtcars),
+#'             f = mpg ~ 0 + am,
+#'             family = NULL,
+#'             prior = prior(beta(4, 1), class = b, lb = 0, ub = 1),
+#'             chains = 5,
+#'             iter = 2000,
+#'             cores = 5,
+#'             graphs = FALSE
+#')
 
 dichot_model <- function(data, formula, family, prior, chains,
                          iter, cores, graphs = TRUE) {
