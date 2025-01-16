@@ -31,7 +31,7 @@ the function call
 Title
 }
 \examples{
-dichot_model(data = data(mtcars),
+dichot_model(data = mtcars,
             f = mpg ~ 0 + am,
             family = NULL,
             prior = prior(beta(4, 1), class = b, lb = 0, ub = 1),

@@ -13,13 +13,14 @@
 #' @returns descriptive statistics and plots of the Bayesian model specified in
 #' the function call
 #' @export
-#' @importFrom brms brm variables
+#' @importFrom brms brm variables prior
 #' @importFrom tidybayes gather_draws mode_hdi stat_halfeye compare_levels
 #' @importFrom dplyr group_by
 #' @importFrom ggplot2 ggplot geom_vline
+#' @importFrom graphics pairs
 #'
 #' @examples
-#'dichot_model(data = data(mtcars),
+#'dichot_model(data = mtcars,
 #'             f = mpg ~ 0 + am,
 #'             family = NULL,
 #'             prior = prior(beta(4, 1), class = b, lb = 0, ub = 1),
@@ -45,8 +46,8 @@ dichot_model <- function(data, formula, family, prior, chains,
     chains = chains,
     iter = iter,
     cores = cores,
-    save_pars = save_pars(all = TRUE),
-    file = "brms_model_temp",
+    save_pars = brms::save_pars(all = TRUE),
+    file = paste0(tempdir(), "\\brms_dichot_temp.rds"),
     file_refit = "on_change"
   )
 
@@ -61,24 +62,24 @@ dichot_model <- function(data, formula, family, prior, chains,
   var_names <- variables(model) # The "variables" function returns a vector of the name of every parameter in the model, which can be useful as BRMS does not always assign things the best names!
 
   # Numerical summaries of the parameters for each subject
-  numerical_summary <- model %>%
-    gather_draws(`b_am(.*)`, regex = TRUE) %>%
-    group_by(.variable) %>%
+  numerical_summary <- model |>
+    gather_draws(`b_am(.*)`, regex = TRUE) |>
+    group_by(.variable) |>
     mode_hdi(.value)
 
   if (graphs) {
     # Visual summaries of the parameters for each subject
-    param_summary_plot <- model %>%
-      gather_draws(`b_am(.*)`, regex = TRUE) %>%
-      ggplot(aes(x = .value, y = .variable)) +
+    param_summary_plot <- model |>
+      gather_draws(`b_am(.*)`, regex = TRUE) |>
+      ggplot(ggplot2::aes(x = .value, y = .variable)) +
       stat_halfeye(point_interval = "mode_hdi")
     print(param_summary_plot)
 
     # Visual comparison of the parameters for each subject
-    param_comparison_plot <- model %>%
-      gather_draws(`b_am(.*)`, regex = TRUE) %>%
-      compare_levels(.value, by = .variable) %>%
-      ggplot(aes(x = .value, y = .variable)) +
+    param_comparison_plot <- model |>
+      gather_draws(`b_am(.*)`, regex = TRUE) |>
+      compare_levels(.value, by = .variable) |>
+      ggplot(ggplot2::aes(x = .value, y = .variable)) +
       stat_halfeye(point_interval = "mode_hdi") +
       geom_vline(xintercept = 0, linetype = "dashed")
     print(param_comparison_plot)
