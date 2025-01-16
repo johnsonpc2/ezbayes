@@ -4,7 +4,16 @@
 \alias{dichot_model}
 \title{Title}
 \usage{
-dichot_model(data, formula, family, prior, chains, iter, cores, graphs = TRUE)
+dichot_model(
+  data,
+  formula,
+  family,
+  prior,
+  chains,
+  iter,
+  cores = parallel::detectCores() - 2,
+  graphs = TRUE
+)
 }
 \arguments{
 \item{data}{an object containing 2 variables, a dichotomous explanatory variable, and an independent variable. The data must include a column 'y' with binary outcomes (0/1) and a column 's' for grouping/hierarchical structure identifiers.}
@@ -34,10 +43,9 @@ Title
 dichot_model(data = mtcars,
             f = mpg ~ 0 + am,
             family = NULL,
-            prior = prior(beta(4, 1), class = b, lb = 0, ub = 1),
+            prior = brms::prior(beta(4, 1), class = b, lb = 0, ub = 1),
             chains = 5,
             iter = 2000,
-            cores = 5,
             graphs = FALSE
 )
 }

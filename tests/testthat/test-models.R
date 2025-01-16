@@ -10,7 +10,6 @@ test_that("dichot model construction", {
                prior = brms::prior(beta(4, 1), class = b, lb = 0, ub = 1),
                chains = 5,
                iter = 2000,
-               cores = 5,
                graphs = FALSE
   )
 

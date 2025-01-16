@@ -1,5 +1,5 @@
 
-#' Title
+#' A function to build a model of a Bayesian model of a dichotomous variable
 #'
 #' @param data an object containing 2 variables, a dichotomous explanatory variable, and an independent variable. The data must include a column 'y' with binary outcomes (0/1) and a column 's' for grouping/hierarchical structure identifiers.
 #' @param formula specifies the structure of the model by defining the relationship between a response variable and predictor variables. This function is customizable with various options and parameters which may be fine-tuned to satisfy different types of models.
@@ -23,15 +23,15 @@
 #'dichot_model(data = mtcars,
 #'             f = mpg ~ 0 + am,
 #'             family = NULL,
-#'             prior = prior(beta(4, 1), class = b, lb = 0, ub = 1),
+#'             prior = brms::prior(beta(4, 1), class = b, lb = 0, ub = 1),
 #'             chains = 5,
 #'             iter = 2000,
-#'             cores = 5,
 #'             graphs = FALSE
 #')
 
 dichot_model <- function(data, formula, family, prior, chains,
-                         iter, cores, graphs = TRUE) {
+                         iter, cores = parallel::detectCores() - 2,
+                         graphs = TRUE) {
 
 # N.B.: We are assuming that the data contain a column called "y" which consists
 # only of 0's and 1's representing different binary outcomes for each observation.
