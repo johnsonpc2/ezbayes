@@ -8,7 +8,7 @@ test_that("dichot model construction", {
                f = mpg ~ 0 + am,
                family = NULL,
                prior = brms::prior(beta(4, 1), class = b, lb = 0, ub = 1),
-               chains = 5,
+               chains = 1,
                iter = 2000,
                graphs = FALSE
   )

@@ -2,7 +2,7 @@
 % Please edit documentation in R/models.R
 \name{dichot_model}
 \alias{dichot_model}
-\title{Title}
+\title{A function to build a model of a Bayesian model of a dichotomous variable}
 \usage{
 dichot_model(
   data,
@@ -37,14 +37,14 @@ descriptive statistics and plots of the Bayesian model specified in
 the function call
 }
 \description{
-Title
+A function to build a model of a Bayesian model of a dichotomous variable
 }
 \examples{
 dichot_model(data = mtcars,
             f = mpg ~ 0 + am,
             family = NULL,
             prior = brms::prior(beta(4, 1), class = b, lb = 0, ub = 1),
-            chains = 5,
+            chains = 1,
             iter = 2000,
             graphs = FALSE
 )
