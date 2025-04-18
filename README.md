@@ -17,6 +17,3 @@ You can install the development version of ezbayes from
 # install.packages("pak")
 pak::pak("johnsonpc2/ezbayes")
 ```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
